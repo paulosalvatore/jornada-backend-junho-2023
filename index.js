@@ -34,6 +34,15 @@ app.post("/herois", function (req, res) {
   res.send("Item criado com sucesso!");
 });
 
+// Read By Id - [GET] /herois/:id
+app.get("/herois/:id", function (req, res) {
+  const id = req.params.id;
+
+  const item = herois[id - 1];
+
+  res.send(item);
+});
+
 app.listen(3000, function () {
   console.log("Aplicando rodando em http://localhost:3000");
 });
