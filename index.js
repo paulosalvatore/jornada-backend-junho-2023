@@ -19,7 +19,7 @@ const herois = ["Mulher Maravilha", "Capitã Marvel", "Homem de Ferro"];
 
 // Read All - [GET] /herois
 app.get("/herois", function (req, res) {
-  res.send(herois);
+  res.send(herois.filter(Boolean));
 });
 
 // Create - [POST] /herois
@@ -52,6 +52,15 @@ app.put("/herois/:id", function (req, res) {
   herois[id - 1] = novoNome;
 
   res.send("Item atualizado com sucesso!");
+});
+
+// Delete - [DELETE] /herois/:id
+app.delete("/herois/:id", function (req, res) {
+  const id = req.params.id;
+
+  delete herois[id - 1];
+
+  res.send("Item removido com sucesso!");
 });
 
 app.listen(3000, function () {
