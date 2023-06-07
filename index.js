@@ -1,6 +1,10 @@
 const express = require("express");
 const app = express();
 
+// Indicamos que o Express deve considerar o Body
+// das requisições como JSON
+app.use(express.json());
+
 app.get("/", function (req, res) {
   res.send("Hello World");
 });
@@ -16,6 +20,18 @@ const herois = ["Mulher Maravilha", "Capitã Marvel", "Homem de Ferro"];
 // Read All - [GET] /herois
 app.get("/herois", function (req, res) {
   res.send(herois);
+});
+
+// Create - [POST] /herois
+app.post("/herois", function (req, res) {
+  // console.log(req.body, typeof req.body);
+
+  const nome = req.body.nome;
+  // console.log(nome, typeof nome);
+
+  herois.push(nome);
+
+  res.send("Item criado com sucesso!");
 });
 
 app.listen(3000, function () {
