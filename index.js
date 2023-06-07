@@ -43,6 +43,17 @@ app.get("/herois/:id", function (req, res) {
   res.send(item);
 });
 
+// Update - [PUT] /herois/:id
+app.put("/herois/:id", function (req, res) {
+  const id = req.params.id;
+
+  const novoNome = req.body.nome;
+
+  herois[id - 1] = novoNome;
+
+  res.send("Item atualizado com sucesso!");
+});
+
 app.listen(3000, function () {
   console.log("Aplicando rodando em http://localhost:3000");
 });
