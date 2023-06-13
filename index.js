@@ -85,6 +85,6 @@ async function main() {
   });
 }
 
-main()
-  .catch(console.error)
-  .finally(() => client.close());
+main();
+// .catch(console.error)
+// .finally(() => client.close());
