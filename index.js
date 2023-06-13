@@ -1,68 +1,83 @@
+const { MongoClient } = require("mongodb");
 const express = require("express");
-const app = express();
 
-// Indicamos que o Express deve considerar o Body
-// das requisições como JSON
-app.use(express.json());
+// Connection URL
+const url = "mongodb://localhost:27017";
+const client = new MongoClient(url);
 
-app.get("/", function (req, res) {
-  res.send("Hello World");
-});
+// Database Name
+const dbName = "ocean_jornada_backend_13_06_2023";
 
-app.get("/oi", function (req, res) {
-  res.send("Olá, mundo!");
-});
+async function main() {
+  const app = express();
 
-// Lista de heróis
-const herois = ["Mulher Maravilha", "Capitã Marvel", "Homem de Ferro"];
-//              0                    1                2
+  // Indicamos que o Express deve considerar o Body
+  // das requisições como JSON
+  app.use(express.json());
 
-// Read All - [GET] /herois
-app.get("/herois", function (req, res) {
-  res.send(herois.filter(Boolean));
-});
+  app.get("/", function (req, res) {
+    res.send("Hello World");
+  });
 
-// Create - [POST] /herois
-app.post("/herois", function (req, res) {
-  // console.log(req.body, typeof req.body);
+  app.get("/oi", function (req, res) {
+    res.send("Olá, mundo!");
+  });
 
-  const nome = req.body.nome;
-  // console.log(nome, typeof nome);
+  // Lista de heróis
+  const herois = ["Mulher Maravilha", "Capitã Marvel", "Homem de Ferro"];
+  //              0                    1                2
 
-  herois.push(nome);
+  // Read All - [GET] /herois
+  app.get("/herois", function (req, res) {
+    res.send(herois.filter(Boolean));
+  });
 
-  res.send("Item criado com sucesso!");
-});
+  // Create - [POST] /herois
+  app.post("/herois", function (req, res) {
+    // console.log(req.body, typeof req.body);
 
-// Read By Id - [GET] /herois/:id
-app.get("/herois/:id", function (req, res) {
-  const id = req.params.id;
+    const nome = req.body.nome;
+    // console.log(nome, typeof nome);
 
-  const item = herois[id - 1];
+    herois.push(nome);
 
-  res.send(item);
-});
+    res.send("Item criado com sucesso!");
+  });
 
-// Update - [PUT] /herois/:id
-app.put("/herois/:id", function (req, res) {
-  const id = req.params.id;
+  // Read By Id - [GET] /herois/:id
+  app.get("/herois/:id", function (req, res) {
+    const id = req.params.id;
 
-  const novoNome = req.body.nome;
+    const item = herois[id - 1];
 
-  herois[id - 1] = novoNome;
+    res.send(item);
+  });
 
-  res.send("Item atualizado com sucesso!");
-});
+  // Update - [PUT] /herois/:id
+  app.put("/herois/:id", function (req, res) {
+    const id = req.params.id;
 
-// Delete - [DELETE] /herois/:id
-app.delete("/herois/:id", function (req, res) {
-  const id = req.params.id;
+    const novoNome = req.body.nome;
 
-  delete herois[id - 1];
+    herois[id - 1] = novoNome;
 
-  res.send("Item removido com sucesso!");
-});
+    res.send("Item atualizado com sucesso!");
+  });
 
-app.listen(3000, function () {
-  console.log("Aplicando rodando em http://localhost:3000");
-});
+  // Delete - [DELETE] /herois/:id
+  app.delete("/herois/:id", function (req, res) {
+    const id = req.params.id;
+
+    delete herois[id - 1];
+
+    res.send("Item removido com sucesso!");
+  });
+
+  app.listen(3000, function () {
+    console.log("Aplicando rodando em http://localhost:3000");
+  });
+}
+
+main()
+  .catch(console.error)
+  .finally(() => client.close());
