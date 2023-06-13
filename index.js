@@ -9,6 +9,12 @@ const client = new MongoClient(url);
 const dbName = "ocean_jornada_backend_13_06_2023";
 
 async function main() {
+  // Use connect method to connect to the server
+  await client.connect();
+  console.log("Banco de dados conectado com sucesso!");
+  const db = client.db(dbName);
+  const collection = db.collection("herois");
+
   const app = express();
 
   // Indicamos que o Express deve considerar o Body
@@ -74,7 +80,7 @@ async function main() {
   });
 
   app.listen(3000, function () {
-    console.log("Aplicando rodando em http://localhost:3000");
+    console.log("Aplicação rodando em http://localhost:3000");
   });
 }
 
