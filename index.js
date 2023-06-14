@@ -85,10 +85,13 @@ async function main() {
   });
 
   // Delete - [DELETE] /herois/:id
-  app.delete("/herois/:id", function (req, res) {
+  app.delete("/herois/:id", async function (req, res) {
     const id = req.params.id;
 
-    delete herois[id - 1];
+    // delete herois[id - 1];
+    await collection.deleteOne({
+      _id: new ObjectId(id),
+    });
 
     res.send("Item removido com sucesso!");
   });
