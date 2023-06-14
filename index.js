@@ -2,7 +2,8 @@ const { MongoClient, ObjectId } = require("mongodb");
 const express = require("express");
 
 // Connection URL
-const url = "mongodb://localhost:27017";
+// const url = "mongodb://localhost:27017";
+const url = "mongodb+srv://admin:V90K7ehx2krw7OlM@cluster0.gbnr4oi.mongodb.net";
 const client = new MongoClient(url);
 
 // Database Name
@@ -96,7 +97,7 @@ async function main() {
     res.send("Item removido com sucesso!");
   });
 
-  app.listen(3000, function () {
+  app.listen(process.env.PORT || 3000, function () {
     console.log("Aplicação rodando em http://localhost:3000");
   });
 }
