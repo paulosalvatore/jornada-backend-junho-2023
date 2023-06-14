@@ -65,14 +65,23 @@ async function main() {
   });
 
   // Update - [PUT] /herois/:id
-  app.put("/herois/:id", function (req, res) {
+  app.put("/herois/:id", async function (req, res) {
     const id = req.params.id;
 
-    const novoNome = req.body.nome;
+    // const novoNome = req.body.nome;
 
-    herois[id - 1] = novoNome;
+    // herois[id - 1] = novoNome;
 
-    res.send("Item atualizado com sucesso!");
+    const item = req.body;
+
+    await collection.updateOne(
+      { _id: new ObjectId(id) },
+      {
+        $set: item,
+      }
+    );
+
+    res.send(item);
   });
 
   // Delete - [DELETE] /herois/:id
