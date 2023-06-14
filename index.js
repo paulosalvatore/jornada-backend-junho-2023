@@ -40,15 +40,16 @@ async function main() {
   });
 
   // Create - [POST] /herois
-  app.post("/herois", function (req, res) {
+  app.post("/herois", async function (req, res) {
     // console.log(req.body, typeof req.body);
 
-    const nome = req.body.nome;
+    const item = req.body;
     // console.log(nome, typeof nome);
 
-    herois.push(nome);
+    // herois.push(nome);
+    await collection.insertOne(item);
 
-    res.send("Item criado com sucesso!");
+    res.send(item);
   });
 
   // Read By Id - [GET] /herois/:id
